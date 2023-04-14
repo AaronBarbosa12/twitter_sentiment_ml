@@ -19,12 +19,6 @@ jobs:
           git lfs install
           git lfs track "images/demo.gif"
           git lfs track "images/demo.png"
-      - name: Ignore binary files
-        run: |
-          echo "images/demo.gif" >> .gitignore
-          echo "images/demo.png" >> .gitignore
-          git add .gitignore
-          git commit -m "Ignore binary files"
       - name: Add remote 
         env:
           HF: ${{ secrets.HUGGINGFACE }}
