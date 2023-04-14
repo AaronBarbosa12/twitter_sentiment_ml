@@ -46,7 +46,7 @@ jobs:
         TWITTER_GITHUB_TOKEN: ${{ secrets.TWITTER_GITHUB_TOKEN }}
       run: |
         git config --global user.email "aaronbarbosa.me@gmail.com"
-        git config --global user.name "Aaron Barbosa"
+        git config --global user.name "AaronBarbosa12"
         git add data/output.csv
         git commit -m 'updated data'
         git push --force https://github.com/AaronBarbosa12/twitter_sentiment_ml main
