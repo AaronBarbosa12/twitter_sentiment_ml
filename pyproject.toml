@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "src"
+version = "0.1.0"
+description = ""
+authors = ["Aaron Barbosa <aaron.barbosa@q-ctrl.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.10"
+transformers = "^4.27.4"
+torch = "^2.0.0"
+python-dotenv = "^1.0.0"
+tweepy = "^4.13.0"
+pandas = "^2.0.0"
+gradio = "^3.24.1"
+folium = "^0.14.0"
+pycountry = "^22.3.5"
+spacy = "^3.5.1"
+hopsworks = "^3.0.5"
+jupyter = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
