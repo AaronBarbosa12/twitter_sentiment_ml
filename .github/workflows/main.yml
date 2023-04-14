@@ -1,0 +1,56 @@
+name: update-feature-store
+
+on:
+#   schedule:
+#    - cron: '0 * * * *'
+
+  workflow_dispatch:
+
+jobs:
+
+  feature_pipeline:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+
+    - name: Install Dependencies
+      run: poetry install
+      if: steps.cache.outputs.cache-hit != 'true'
+        
+    - name: execute python workflows from bash script
+      env: 
+        HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
+        FEATURE_GROUP_NAME: ${{ secrets.FEATURE_GROUP_NAME }}
+        FEATURE_GROUP_VERSION: ${{ secrets.FEATURE_GROUP_VERSION }}
+        FEATURE_VIEW_NAME: ${{ secrets.FEATURE_VIEW_NAME }}
+        HOPSWORKS_PROJECT_NAME: ${{ secrets.HOPSWORKS_PROJECT_NAME }}
+        HUGGINGFACE: ${{ secrets.HUGGINGFACE }}
+        TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+        TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+        TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+        TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+      run: poetry run jupyter nbconvert --to notebook --execute notebooks/populate_feature_store.ipynb 
+    
+    - name: push new data
+      env: 
+        TWITTER_GITHUB_TOKEN: ${{ secrets.TWITTER_GITHUB_TOKEN }}
+      run: |
+        git config --global user.email "aaronbarbosa.me@gmail.com.com"
+        git config --global user.name "Aaron Barbosa"
+        git add data/output.csv
+        git commit -m 'updated data'
+        git push origin master
+          
+      
+      
+      
