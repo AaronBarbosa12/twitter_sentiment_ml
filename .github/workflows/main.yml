@@ -49,8 +49,4 @@ jobs:
         git config --global user.name "Aaron Barbosa"
         git add data/output.csv
         git commit -m 'updated data'
-        git push origin master
-          
-      
-      
-      
+        git push --force https://github.com/AaronBarbosa12/twitter_sentiment_ml main
