@@ -1,0 +1,32 @@
+name: Sync to Hugging Face hub
+on:
+  push:
+    branches: [main]
+
+  # to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          lfs: true
+      - name: Add remote 
+        env:
+          HF: ${{ secrets.HUGGINGFACE }}
+        run: git remote add space https://AaronBarbosa:$HF@huggingface.co/spaces/AaronBarbosa/twitter_sentiment
+      - name: Remove files from LFS cache
+        run: |
+          git lfs untrack "images/demo.gif"
+          git lfs untrack "images/demo.png"
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "Remove binary files"
+      - name: Push changes to hub
+        env:
+          HF: ${{ secrets.HUGGINGFACE }}
+        run: git push --force https://AaronBarbosa:$HF@huggingface.co/spaces/AaronBarbosa/twitter_sentiment main
