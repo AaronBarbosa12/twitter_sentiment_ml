@@ -14,19 +14,22 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
+      - name: Configure Git LFS
+        run: |
+          git lfs install
+          git lfs track "images/demo.gif"
+          git lfs track "images/demo.png"
+      - name: Ignore binary files
+        run: |
+          echo "images/demo.gif" >> .gitignore
+          echo "images/demo.png" >> .gitignore
+          git add .gitignore
+          git commit -m "Ignore binary files"
       - name: Add remote 
         env:
           HF: ${{ secrets.HUGGINGFACE }}
         run: git remote add space https://AaronBarbosa:$HF@huggingface.co/spaces/AaronBarbosa/twitter_sentiment
-      - name: Remove files from LFS cache
-        run: |
-          git lfs untrack "images/demo.gif"
-          git lfs untrack "images/demo.png"
-      - name: Commit changes
-        run: |
-          git add .
-          git commit -m "Remove binary files"
-      - name: Push changes to hub
+      - name: Push to hub
         env:
           HF: ${{ secrets.HUGGINGFACE }}
         run: git push --force https://AaronBarbosa:$HF@huggingface.co/spaces/AaronBarbosa/twitter_sentiment main
