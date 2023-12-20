@@ -13,8 +13,6 @@ license: cc
 # twitter_sentiment_real_time
 Automated real-time sentiment analysis
 
-[Try The Demo Here](https://huggingface.co/spaces/AaronBarbosa/twitter_sentiment)
-
 This application monitors the public's sentiment about chatgpt on Twitter and presents it with a geographical visualization.
 
 <p align="center">
